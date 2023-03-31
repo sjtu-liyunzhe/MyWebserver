@@ -34,10 +34,10 @@ public:
                         // 执行队列中的任务
                         if(!tasks.empty())
                         {
-                            auto task = std::move(tasks.front());
+                            auto task = std::move(tasks.front());       // 取任务加锁
                             tasks.pop();
                             locker.unlock();
-                            task();
+                            task();         // 执行任务解锁，多线程并发执行
                             locker.lock();
                         }
                         else if(isClosed) break;
@@ -45,6 +45,24 @@ public:
                     }
                 }
             );
+            // thread_arr.emplace_back(
+            //     [&]()
+            //     {
+            //         while(true)
+            //         {
+            //             // 执行队列中的任务
+            //             std::function<void()> task;
+            //             {
+            //                 std::unique_lock<std::mutex> locker(mtx);
+            //                 cond.wait(locker, [&]() {return isClosed || !tasks.empty();});
+            //                 if(isClosed && tasks.empty()) break;
+            //                 task = std::move(tasks.front());
+            //                 tasks.pop();
+            //             }
+            //             task();
+            //         }
+            //     }
+            // );
         }
     }
     Threadpoll() = default;
