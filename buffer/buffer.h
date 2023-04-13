@@ -29,7 +29,7 @@ public:
     inline void updateReadPtr(size_t len);
     inline void updateReadPtrToEnd(const char* end);
     inline void updateWritePtr(size_t len);
-    inline void initPtr();     // 初始化智能指针
+    inline void initPtr();     // 初始化指针
 
     // 处理http所需接口
     void ensureWriteAll(size_t len);      // 保证数据写入缓冲区
