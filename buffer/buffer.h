@@ -17,19 +17,19 @@ public:
     ~Buffer() = default;
 
 
-    inline size_t writeMaxBytes() const;       // 缓冲区可以写入的字节数
-    inline size_t readMaxBytes() const;        // 缓冲区可以读取的字节数
-    inline size_t readBytes() const;           // 已经读取的字节数
+    size_t writeMaxBytes() const;       // 缓冲区可以写入的字节数
+    size_t readMaxBytes() const;        // 缓冲区可以读取的字节数
+    size_t readBytes() const;           // 已经读取的字节数
 
-    inline const char* curReadPtr() const;     // 获取当前读指针
-    inline const char* curWritePtrConst() const;       // 写指针
-    inline char* curWritePtr(); 
+    const char* curReadPtr() const;     // 获取当前读指针
+    const char* curWritePtrConst() const;       // 写指针
+    char* curWritePtr(); 
 
     // 更新指针
-    inline void updateReadPtr(size_t len);
-    inline void updateReadPtrToEnd(const char* end);
-    inline void updateWritePtr(size_t len);
-    inline void initPtr();     // 初始化指针
+    void updateReadPtr(size_t len);
+    void updateReadPtrToEnd(const char* end);
+    void updateWritePtr(size_t len);
+    void initPtr();     // 初始化指针
 
     // 处理http所需接口
     void ensureWriteAll(size_t len);      // 保证数据写入缓冲区
@@ -59,8 +59,8 @@ public:
 
 private:
 
-    inline char* beginPtr_();
-    inline const char* beginPtr_() const;
+    char* beginPtr_();
+    const char* beginPtr_() const;
     // 扩容
     void reserveSpace(size_t len);
 

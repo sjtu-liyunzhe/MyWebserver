@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <assert.h>
 
-#include "buffer.h"
+#include "../buffer/buffer.h"
 #include "HTTPrequest.h"
 #include "HTTPresponse.h"
 
@@ -30,15 +30,15 @@ public:
 
     const char* getIP() const;          // 获取IP信息
     int getPort() const;
-    inline int getFd() const;          // 获取HTTP连接描述符
-    inline sockaddr_in getAddr() const;
+    int getFd() const;          // 获取HTTP连接描述符
+    sockaddr_in getAddr() const;
 
-    inline int writeBytes()
+    int writeBytes()
     {
         return iov_[1].iov_len + iov_[0].iov_len;
     }
 
-    inline bool isKeepAlive() const
+    bool isKeepAlive() const
     {
         return request_.isKeepAlive();
     }

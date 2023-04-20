@@ -5,7 +5,7 @@
 #include <unordered_set>
 #include <string>
 #include <regex>
-#include "buffer.h"
+#include "../buffer/buffer.h"
 
 class HTTPrequest
 {
@@ -22,7 +22,7 @@ public:
         NO_REQUEST = 0,
         GET_REQUEST,
         BAD_REQUEST,
-        NO_REQUEST,
+        NO_RESOURSE,
         FORBIDDEN_REQUEST,
         FILE_REQUEST,
         INTERNAL_ERROR,

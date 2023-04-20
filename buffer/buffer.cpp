@@ -4,55 +4,55 @@ Buffer::Buffer(int initBufferSize):
     buffer_(initBufferSize), readPos_(0), writePos_(0)
     {}
 
-inline size_t Buffer::readMaxBytes() const
+size_t Buffer::readMaxBytes() const
 {
     return writePos_ - readPos_;
 }
 
-inline size_t Buffer::writeMaxBytes() const
+size_t Buffer::writeMaxBytes() const
 {
     return buffer_.size() - writePos_;
 }
 
-inline size_t Buffer::readBytes() const
+size_t Buffer::readBytes() const
 {
     return readPos_;
 }
 
-inline const char* Buffer::curReadPtr() const
+const char* Buffer::curReadPtr() const
 {
     return beginPtr_() + readPos_;
 }
 
-inline const char* Buffer::curWritePtrConst() const
+const char* Buffer::curWritePtrConst() const
 {
     return beginPtr_() + writePos_;
 }
 
-inline char* Buffer::curWritePtr()
+char* Buffer::curWritePtr()
 {
     return beginPtr_() + writePos_;
 }
 
-inline void Buffer::updateReadPtr(size_t len)
+void Buffer::updateReadPtr(size_t len)
 {
-    assert(len < readMaxBytes());
+    assert(len <= readMaxBytes());
     readPos_ += len;
 }
 
-inline void Buffer::updateReadPtrToEnd(const char* end)
+void Buffer::updateReadPtrToEnd(const char* end)
 {
     assert(end >= curReadPtr());
     updateReadPtr(end - curReadPtr());
 }
 
-inline void Buffer::updateWritePtr(size_t len)
+void Buffer::updateWritePtr(size_t len)
 {
     assert(len <= writeMaxBytes());
     writePos_ += len;
 }
 
-inline void Buffer::initPtr()
+void Buffer::initPtr()
 {
     bzero(&buffer_[0], buffer_.size());
     readPos_ = 0;
@@ -61,9 +61,9 @@ inline void Buffer::initPtr()
 
 void Buffer::reserveSpace(size_t len)
 {
-    if(writeMaxBytes() + readMaxBytes() <= len)
+    if(writeMaxBytes() + readMaxBytes() < len)
     {
-        buffer_.resize(len);
+        buffer_.resize(writePos_ + len + 1);
     }
     else
     {
@@ -122,6 +122,7 @@ ssize_t Buffer::readFd(int fd, int* Errno)
     const ssize_t len = readv(fd, iov, 2);
     if(len < 0)
     {
+        std::cout << "从fd读取数据失败！" << std::endl;
         *Errno = errno;
     }
     else if(static_cast<size_t>(len) <= writeMax)
@@ -156,12 +157,12 @@ std::string Buffer::alltoString()
     return str;
 }
 
-inline char* Buffer::beginPtr_()
+char* Buffer::beginPtr_()
 {
     return &*buffer_.begin();
 }
 
-inline const char* Buffer::beginPtr_() const
+const char* Buffer::beginPtr_() const
 {
     return &*buffer_.cbegin();
 }

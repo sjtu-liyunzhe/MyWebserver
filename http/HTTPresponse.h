@@ -8,7 +8,7 @@
 #include <sys/mman.h> //mmap,munmap
 #include <assert.h>
 
-#include "buffer.h"
+#include "../buffer/buffer.h"
 
 class HTTPresponse
 {
@@ -21,7 +21,7 @@ public:
     void unmapFile_();
     char* file();
     size_t fileLen() const;
-    void errnoContent(Buffer& buffer, std::string message);         // 请求文件打不开
+    void errorContent(Buffer& buffer, std::string message);         // 请求文件打不开
     int code() const { return code_; }
 
 private:
@@ -29,7 +29,7 @@ private:
     void addResponseHeader_(Buffer& buffer);
     void addResponseContent_(Buffer& buffer);
 
-    void errnoHTML_();
+    void errorHTML_();
     std::string getFileType_();
 
     int code_;                  // HTTP状态

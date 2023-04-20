@@ -28,9 +28,9 @@ bool HTTPrequest::parse(Buffer& buffer)
     {
         return false;
     }
-    //std::cout<<"parse buff start:"<<std::endl;
-    //buff.printContent();
-    //std::cout<<"parse buff finish:"<<std::endl;
+    std::cout<<"parse buff start:"<<std::endl;
+    buffer.printContent();
+    std::cout<<"parse buff finish:"<<std::endl;
     while(buffer.readMaxBytes() && state_ != FINISH)
     {
         // buffer中查找CRLF字符串第一次出现的位置
@@ -170,6 +170,10 @@ void HTTPrequest::parsePost_() {
 }
 
 std::string HTTPrequest::path() const{
+    return path_;
+}
+
+std::string& HTTPrequest::path(){
     return path_;
 }
 

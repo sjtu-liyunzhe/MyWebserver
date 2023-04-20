@@ -38,12 +38,12 @@ void HTTPconnection::closeHTTPConn()
     }
 }
 
-inline int HTTPconnection::getFd() const
+int HTTPconnection::getFd() const
 {
     return fd_;
 }
 
-inline struct sockaddr_in HTTPconnection::getAddr() const{
+struct sockaddr_in HTTPconnection::getAddr() const{
     return addr_;
 }
 

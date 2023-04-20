@@ -1,4 +1,4 @@
-#include "../threadpool/threadpoll.h"
+#include "threadpool.h"
 #include <iostream>
 #include <unistd.h>
 
@@ -15,7 +15,7 @@ void task()
 
 int main()
 {
-    Threadpoll pool(8);
+    Threadpool pool(8);
     for(int i = 0; i < 100; ++i)
     {
         pool.addTask(task);
